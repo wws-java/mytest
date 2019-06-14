@@ -19,7 +19,7 @@ public class MovieRepoPageProcessor implements PageProcessor {
 //    public static List<Movie> movies = new ArrayList<>();
     @Override
     public void process(Page page) {
-//        movies = new ArrayList<>();
+
         ObjectMapper objectMapper = new ObjectMapper();
         HashMap<String,List< Map<String,Object>>> map = new HashMap<>();
         try {
@@ -27,15 +27,9 @@ public class MovieRepoPageProcessor implements PageProcessor {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(map);
         List<Map<String,Object>> listMap = map.get("subjects");
         listMap.forEach(it -> {
-//            Movie movie = new Movie();
-//            movie.setId((int)Math.floor(Math.random()*10000));
             Spider.create(new MovieRepoPageProcessorDeep()).addUrl(it.get("url").toString()).addPipeline(new MoviePipeline()).runAsync();
-//            movie.setScore(it.get("rate").toString());
-//            movie.setName(it.get("title").toString());
-//            movies.add(movie);
         });
 
     }
